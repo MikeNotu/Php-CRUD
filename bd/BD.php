@@ -2,7 +2,7 @@
 $pdo=null;
 $host="localhost";
 $user="root";
-$password="Admin123";
+$password="";
 $bd="tutoriales";
 
 function conectar(){
