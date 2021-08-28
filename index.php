@@ -31,4 +31,17 @@ if($_POST['METHOD']=='POST'){
     exit();
 }
 
+if($_POST['METHOD']=='PUT'){
+    unset($_POST['METHOD']);
+    $id=$_GET['id'];
+    $nombre=$_POST['nombre'];
+    $lanzamiento=$_POST['lanzamiento'];
+    $desarrollador=$_POST['desarrollador'];
+    $query="UPDATE frameworks SET nombre = '$nombre', lanzamiento='$lanzamiento', desarrollador='$desarrollador' WHERE id='$id'";
+    $resultado=metodoPost($query,$queryAutoIncrement);
+    echo json_encode($resultado);
+    header("HTTP/1.1 200 OK");
+    exit();
+}
+
 ?>
