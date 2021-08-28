@@ -1,12 +1,13 @@
 <?php
 $pdo=null;
 $host="localhost";
-$user="Admin123";
+$user="root";
+$password="Admin123";
 $bd="tutoriales";
 
 function conectar(){
     try{
-        $GLOBALS['pdo']=new PDO("mysql:host=".$GLOBALS['host'].";dbname=".$GLOBALS['bd']."",$GLOBALS['user'],$GLOBALS['password']);
+        $GLOBALS['pdo']=new PDO("mysql:host=".$GLOBALS['host'].";dbname=".$GLOBALS['bd']."", $GLOBALS['user'], $GLOBALS['password']);
         $GLOBALS['pdo']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch (PDOException $e){
         print "Error!: No se pudo conectar a la bd ".$bd."<br/>";
@@ -15,7 +16,7 @@ function conectar(){
     }
 }
 
-function desconectar(){
+function desconectar() {
     $GLOBALS['pdo']=null;
 }
 
@@ -23,11 +24,10 @@ function metodoGet($query){
     try{
         conectar();
         $sentencia=$GLOBALS['pdo']->prepare($query);
-        $sentencia=setFetchMode(PDO::FETCH_ASSOC);
+        $sentencia->setFetchMode(PDO::FETCH_ASSOC);
         $sentencia->execute();
         desconectar();
         return $sentencia;
-
     }catch(Exception $e){
         die("Error: ".$e);
     }
@@ -40,14 +40,14 @@ function metodoPost($query, $queryAutoIncrement){
         $sentencia->execute();
         $idAutoIncrement=metodoGet($queryAutoIncrement)->fetch(PDO::FETCH_ASSOC);
         $resultado=array_merge($idAutoIncrement, $_POST);
-        $sentenecia->closeCursor();
+        $sentencia->closeCursor();
         desconectar();
         return $resultado;
-
     }catch(Exception $e){
         die("Error: ".$e);
     }
 }
+
 
 function metodoPut($query){
     try{
@@ -55,10 +55,9 @@ function metodoPut($query){
         $sentencia=$GLOBALS['pdo']->prepare($query);
         $sentencia->execute();
         $resultado=array_merge($_GET, $_POST);
-        $sentenecia->closeCursor();
+        $sentencia->closeCursor();
         desconectar();
         return $resultado;
-
     }catch(Exception $e){
         die("Error: ".$e);
     }
@@ -69,10 +68,9 @@ function metodoDelete($query){
         conectar();
         $sentencia=$GLOBALS['pdo']->prepare($query);
         $sentencia->execute();
-        $sentenecia->closeCursor();
+        $sentencia->closeCursor();
         desconectar();
         return $_GET['id'];
-
     }catch(Exception $e){
         die("Error: ".$e);
     }
