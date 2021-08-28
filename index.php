@@ -18,6 +18,17 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
     exit();
 }
 
-if($_SERVER['REQUEST'])
+if($_POST['METHOD']=='POST'){
+    unset($_POST['METHOD']);
+    $nombre=$_POST['nombre'];
+    $lanzamiento=$_POST['lanzamiento'];
+    $desarrollador=$_POST['desarrollador'];
+    $query="INSERT INTO frameworks(nombre,lanzamiento,desarrollador) values ('$nombre','$lanzamiento','$desarrollador')";
+    $queryAutoIncrement="SELECT MAX(id) as id from frameworks";
+    $resultado=metodoPost($query,$queryAutoIncrement);
+    echo json_encode($resultado);
+    header("HTTP/1.1 200 OK");
+    exit();
+}
 
 ?>
